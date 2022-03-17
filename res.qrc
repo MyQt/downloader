@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/download_16px.png</file>
+        <file>icons/esc_16px.png</file>
+        <file>icons/new_copy_16px.png</file>
+        <file>icons/show_property_16px.png</file>
+        <file>icons/Delete_16px.png</file>
+        <file>icons/restart_16px.png</file>
+        <file>icons/start_16px.png</file>
+        <file>icons/stop_16px.png</file>
+        <file>icons/task_completed_16px.png</file>
+        <file>icons/downloading_16px.png</file>
+        <file>icons/tasklist_16px.png</file>
+        <file>icons/document_16px.png</file>
+        <file>icons/program_16px.png</file>
+        <file>icons/archive_16px.png</file>
+        <file>icons/video_16px.png</file>
+        <file>icons/music_16px.png</file>
+        <file>icons/Delete_all_16px.png</file>
+        <file>icons/stop_all_16px.png</file>
+        <file>icons/pause_all_16px.png</file>
+        <file>icons/minus_16px.png</file>
+        <file>icons/plus_16px.png</file>
+        <file>icons/image_16px.png</file>
+        <file>icons/search_16px.png</file>
+        <file>icons/sort_asc_16px.png</file>
+        <file>icons/sort_desc_16px.png</file>
+    </qresource>
+</RCC>

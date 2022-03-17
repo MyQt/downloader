@@ -1,0 +1,69 @@
+﻿  Reading Qt configuration (D:/Developer/Qt5.14.2/5.14.2/msvc2017_64/bin/qmake)
+  Generate moc_predefs.h
+  COPY config
+  Uic'ing downloadinfo.ui...
+  Uic'ing formclassify.ui...
+  Uic'ing mainwindow.ui...
+  Uic'ing newtask.ui...
+  Rcc'ing res.qrc...
+  Moc'ing download\abstractmission.h...
+  Moc'ing ui\downloadinfo.h...
+  Moc'ing download\downloadmission.h...
+  Moc'ing ui\formclassify.h...
+  Moc'ing ui\mainwindow.h...
+  Moc'ing download\multithreaddownloader.h...
+  Moc'ing download\multithreadeddownloaderwriter.h...
+  Moc'ing ui\newtask.h...
+  classifymodel.cpp
+  datamodel.cpp
+  downloadinfo.cpp
+  downloadmission.cpp
+  filemodel.cpp
+  formclassify.cpp
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 download\downloadmission.cpp)
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 ui\downloadinfo.cpp)
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 ui\downloadinfo.cpp)
+  handlefactory.cpp
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 ui\formclassify.cpp)
+  main.cpp
+e:\userdata\personal\github\qt\downloader\download\multithreaddownloader.h(33): warning C4172: 返回局部变量或临时变量的地址
+  mainwindow.cpp
+  multithreaddownloader.cpp
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 operator\handlefactory.cpp)
+  multithreadeddownloaderwriter.cpp
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 main.cpp)
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 ui\mainwindow.cpp)
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 main.cpp)
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 ui\mainwindow.cpp)
+e:\userdata\personal\github\qt\downloader\ui\mainwindow.cpp(244): warning C4100: “checked”: 未引用的形参
+e:\userdata\personal\github\qt\downloader\ui\mainwindow.cpp(262): warning C4100: “column”: 未引用的形参
+e:\userdata\personal\github\qt\downloader\ui\mainwindow.cpp(262): warning C4100: “item”: 未引用的形参
+e:\userdata\personal\github\qt\downloader\ui\mainwindow.cpp(267): warning C4100: “pos”: 未引用的形参
+e:\userdata\personal\github\qt\downloader\ui\mainwindow.cpp(366): warning C4100: “logicalIndex”: 未引用的形参
+e:\userdata\personal\github\qt\downloader\ui\mainwindow.cpp(384): warning C4100: “bytesTotal”: 未引用的形参
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 download\multithreaddownloader.cpp)
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 download\multithreaddownloader.cpp)
+  newtask.cpp
+  sqladapter.cpp
+  sqlclassifyadapter.cpp
+  sqldatahandle.cpp
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 operator\sqladapter.cpp)
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 operator\sqlclassifyadapter.cpp)
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 operator\sqldatahandle.cpp)
+  sqlfileadapter.cpp
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 operator\sqlfileadapter.cpp)
+  qrc_res.cpp
+  moc_abstractmission.cpp
+  moc_downloadinfo.cpp
+  moc_downloadmission.cpp
+  moc_formclassify.cpp
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 Debug\moc_formclassify.cpp)
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 Debug\moc_downloadmission.cpp)
+  moc_mainwindow.cpp
+  moc_multithreaddownloader.cpp
+  moc_multithreadeddownloaderwriter.cpp
+  moc_newtask.cpp
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 Debug\moc_multithreaddownloader.cpp)
+e:\userdata\personal\github\qt\downloader\operator\sqladapter.h(51): warning C4100: “listData”: 未引用的形参 (编译源文件 Debug\moc_mainwindow.cpp)
+e:\userdata\personal\github\qt\downloader\download\downloadmission.h(46): warning C4100: “err”: 未引用的形参 (编译源文件 Debug\moc_mainwindow.cpp)
+  downloader.vcxproj -> E:\UserData\Personal\GitHub\QT\downloader\debug\downloader.exe

@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1281</width>
+    <height>613</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>网络下载管理器</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/icons/download_16px.png</normaloff>:/icons/download_16px.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>1</number>
+    </property>
+    <property name="leftMargin">
+     <number>1</number>
+    </property>
+    <property name="topMargin">
+     <number>1</number>
+    </property>
+    <property name="rightMargin">
+     <number>1</number>
+    </property>
+    <property name="bottomMargin">
+     <number>1</number>
+    </property>
+    <item>
+     <widget class="QTreeWidget" name="treeWidget_task">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTreeView
+{
+    background-color: #5B677A;
+    font-size:17px;
+    color: white;
+}
+QTreeView::item:hover
+{
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1);
+    border: 1px solid #bfcde4;
+}
+QTreeView::item:hover
+{
+    background: rgb(69, 187, 217);
+}
+QTreeView::item:selected:active
+{
+    background: rgb(63, 147, 168);
+}
+QTreeView::item:selected:!active
+{
+    background: rgb(63, 147, 168);
+}
+QTreeView::branch
+{
+    background:#5B677A;
+}
+QTreeView::branch:has-children:!has-siblings:closed,QTreeView::branch:closed:has-children:has-siblings
+{
+    width:16px;
+	height:16px;
+	border-image: url(:/icons/plus_16px.png);
+    background:#5B677A;
+    
+}
+QTreeView::branch:open:has-children:!has-siblings,QTreeView::branch:open:has-children:has-siblings
+{
+    
+	border-image: url(:/icons/minus_16px.png);
+    background:#5B677A;
+    ;
+};</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideLeft</enum>
+      </property>
+      <property name="animated">
+       <bool>true</bool>
+      </property>
+      <property name="headerHidden">
+       <bool>true</bool>
+      </property>
+      <property name="columnCount">
+       <number>1</number>
+      </property>
+      <attribute name="headerVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="headerCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="headerHighlightSections">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="headerShowSortIndicator" stdset="0">
+       <bool>true</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string notr="true">分类</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget_download_file">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QHeaderView::up-arrow {
+subcontrol-position: center right
+padding-right: 8px
+image: url(:/icons/sort_asc_16px.png)
+}
+QHeaderView::down-arrow { 
+subcontrol-position: center right
+padding-right: 8px                                                   
+image: url(:/icons/sort_desc_16px.png)
+}
+</string>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ContiguousSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="textElideMode">
+       <enum>Qt::ElideMiddle</enum>
+      </property>
+      <property name="gridStyle">
+       <enum>Qt::DashDotLine</enum>
+      </property>
+      <column>
+       <property name="text">
+        <string>文件名</string>
+       </property>
+       <property name="toolTip">
+        <string>下载文件名称</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+       <property name="background">
+        <color alpha="128">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>大小</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+       <property name="background">
+        <color alpha="128">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>状态</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+       <property name="background">
+        <color alpha="128">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>剩余时间</string>
+       </property>
+       <property name="toolTip">
+        <string>估算下载时间</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+       <property name="background">
+        <color alpha="128">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>下载速度</string>
+       </property>
+       <property name="toolTip">
+        <string>总下载速度</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+       <property name="background">
+        <color alpha="128">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>创建时间</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>描述</string>
+       </property>
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+       <property name="background">
+        <color alpha="128">
+         <red>0</red>
+         <green>0</green>
+         <blue>0</blue>
+        </color>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1281</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_file">
+    <property name="title">
+     <string>任务</string>
+    </property>
+    <addaction name="action_new"/>
+    <addaction name="action_show_task"/>
+    <addaction name="action_quit"/>
+   </widget>
+   <widget class="QMenu" name="menu_download">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_stop"/>
+    <addaction name="action_start"/>
+    <addaction name="action_restart"/>
+    <addaction name="action_delete"/>
+   </widget>
+   <widget class="QMenu" name="menu_downopt">
+    <property name="title">
+     <string>下载</string>
+    </property>
+    <addaction name="action_pause_all"/>
+    <addaction name="action_stop_all"/>
+    <addaction name="action_del_all_complete"/>
+    <addaction name="action_find"/>
+   </widget>
+   <widget class="QMenu" name="menu_see">
+    <property name="title">
+     <string>查看</string>
+    </property>
+    <addaction name="action_classify"/>
+    <addaction name="action_sort"/>
+   </widget>
+   <widget class="QMenu" name="menu_about">
+    <property name="title">
+     <string>关于</string>
+    </property>
+    <addaction name="action_about"/>
+   </widget>
+   <addaction name="menu_file"/>
+   <addaction name="menu_download"/>
+   <addaction name="menu_downopt"/>
+   <addaction name="menu_see"/>
+   <addaction name="menu_about"/>
+  </widget>
+  <action name="action_new">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/new_copy_16px.png</normaloff>:/icons/new_copy_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>新建任务</string>
+   </property>
+  </action>
+  <action name="action_show_task">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/show_property_16px.png</normaloff>:/icons/show_property_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>显示悬浮窗</string>
+   </property>
+  </action>
+  <action name="action_quit">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/esc_16px.png</normaloff>:/icons/esc_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出</string>
+   </property>
+  </action>
+  <action name="action_stop">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/stop_16px.png</normaloff>:/icons/stop_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>停止下载</string>
+   </property>
+  </action>
+  <action name="action_start">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/start_16px.png</normaloff>:/icons/start_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>开始下载</string>
+   </property>
+  </action>
+  <action name="action_restart">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/restart_16px.png</normaloff>:/icons/restart_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>重新下载</string>
+   </property>
+  </action>
+  <action name="action_delete">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/Delete_16px.png</normaloff>:/icons/Delete_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>删除下载</string>
+   </property>
+  </action>
+  <action name="action_pause_all">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/pause_all_16px.png</normaloff>:/icons/pause_all_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>全部暂停</string>
+   </property>
+  </action>
+  <action name="action_stop_all">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/stop_all_16px.png</normaloff>:/icons/stop_all_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>全部停止</string>
+   </property>
+  </action>
+  <action name="action_del_all_complete">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/icons/Delete_all_16px.png</normaloff>:/icons/Delete_all_16px.png</iconset>
+   </property>
+   <property name="text">
+    <string>删除全部已完成的任务</string>
+   </property>
+  </action>
+  <action name="action_find">
+   <property name="text">
+    <string>查找</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="action_classify">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>隐藏分类</string>
+   </property>
+  </action>
+  <action name="action_sort">
+   <property name="text">
+    <string>排列文件</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="text">
+    <string>关于我</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
