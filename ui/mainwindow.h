@@ -25,6 +25,12 @@ class
         ETIT_CREATETIME, // 创建时间
         ETIT_TIPS // 描述
     };
+    enum treeType {
+        ETT_ALL = 0,
+        ETT_UNCOMPLETE,
+        ETT_COMPLETE,
+        ETT_END
+    };
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -50,6 +56,8 @@ private slots:
     void onCancelDownload(int id);
     void onStartDownload(int id);
     void onAddToDownloadQueue(int id);
+    // 行为操作相关
+    void onRemoveTasks(bool bDelete);
     void on_action_start_triggered();
 
     void on_action_show_task_triggered();

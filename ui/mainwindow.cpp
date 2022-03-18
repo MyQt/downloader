@@ -6,6 +6,7 @@
 #include "operator/sqlfileadapter.h"
 #include "downloadinfo.h"
 #include "formclassify.h"
+#include "removetask.h"
 #include <QMessageBox>
 #include <QApplication>
 #include <QDesktopServices>
@@ -51,26 +52,25 @@ void MainWindow::initTreeWidget()
     ui->treeWidget_task->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeWidget_task, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotContextMenu(QPoint)));
     ui->treeWidget_task->clear();
-    QStringList strList{"全部任务","未完成","已完成"};
-    QStringList strIconList{":/icons/tasklist_16px.png",":/icons/downloading_16px.png",":/icons/task_completed_16px.png"};
-    int nIndex = 0;
-    foreach(auto topLevel, strList) {
+    QString strList[ETT_END]={"全部任务","未完成","已完成"};
+    QString strIcon[ETT_END]={":/icons/tasklist_16px.png",":/icons/downloading_16px.png",":/icons/task_completed_16px.png"};
+
+    for(int i = 0; i < ETT_END; i++) {
+        QString topLevel = strList[i];
         QTreeWidgetItem* topItem = new QTreeWidgetItem(ui->treeWidget_task);
-        topItem->setData(0, Qt::UserRole, QPoint(0,nIndex));
+        topItem->setData(0, Qt::UserRole, QPoint(0,i));
         topItem->setText(0,topLevel);
-        topItem->setIcon(0, QIcon(strIconList.at(nIndex)));
+        topItem->setIcon(0, QIcon(strIcon[i]));
         ui->treeWidget_task->addTopLevelItem(topItem);
         // 添加子项
         SQLAdapter* pAdapter = mDataHandle->sqlAdapter(EAT_CLASSIFY);
         for (auto iter = pAdapter->dataModel().begin(); iter != pAdapter->dataModel().end(); iter++) {
             ClassifyModel* pModel = dynamic_cast<ClassifyModel*>(iter.value());
             QTreeWidgetItem* childItem = new QTreeWidgetItem(topItem);
-            childItem->setData(0, Qt::UserRole, QPoint(1, pModel->id()));
+            childItem->setData(0, Qt::UserRole, QPoint(i*100+1, pModel->id()));
             childItem->setText(0,iter.value()->name());
             childItem->setIcon(0, QIcon(":/icons/"+pModel->icon()));
         }
-
-        nIndex++;
     }
     ui->treeWidget_task->expandAll();
     // 创建分类右键菜单
@@ -78,7 +78,7 @@ void MainWindow::initTreeWidget()
         mClassifyMenu = new QMenu(ui->treeWidget_task);
         connect(mClassifyMenu, &QMenu::triggered, this, &MainWindow::onClassifyAction);
 
-        nIndex = 0;
+        int nIndex = 0;
         QStringList strActionList{"浏览","属性","添加分类","删除分类"};
         foreach(auto strAction, strActionList) {
             QAction* pAction = new QAction(strAction, mClassifyMenu);
@@ -269,7 +269,44 @@ void MainWindow::on_action_about_triggered()
 
 void MainWindow::on_treeWidget_task_itemClicked(QTreeWidgetItem *item, int column)
 {
-
+    QPoint point = item->data(0, Qt::UserRole).toPoint();
+    int nIndex = point.y();
+    int level = point.x();
+    int classifyId = -1;
+    treeType topType = (treeType)(level / 100);
+    if (level != 0) { // 子节点
+        classifyId = nIndex;
+    }
+    for (int i = 0; i < ui->tableWidget_download_file->rowCount(); i++) {
+        QTableWidgetItem* pItem = ui->tableWidget_download_file->item(i, 0);
+        if (pItem == nullptr) return;
+        int fileId = pItem->data(Qt::UserRole).toInt();
+        FileModel* pFileModel = dynamic_cast<FileModel*>(mDataHandle->sqlAdapter(EAT_FILE)->findDataModel(fileId));
+        if (pFileModel == nullptr) return;
+        bool bShowRow = true;
+        if (level == 0) { // 顶层树
+            if (nIndex == ETT_COMPLETE) { // 已完成
+                if (pFileModel->status() == false) {
+                    bShowRow = false;
+                }
+            } else if (nIndex == ETT_UNCOMPLETE) { // 未完成
+                if (pFileModel->status() == true) {
+                    bShowRow = false;
+                }
+            }
+        } else { // 分类树
+            if (pFileModel->classifyID() != classifyId) {
+                bShowRow = false;
+            } else {
+                if (topType == ETT_COMPLETE && pFileModel->status() == false) {
+                    bShowRow = false;
+                } else if(topType == ETT_UNCOMPLETE && pFileModel->status() == true) {
+                    bShowRow = false;
+                }
+            }
+        }
+        ui->tableWidget_download_file->setRowHidden(i, !bShowRow);
+    }
 }
 
 void MainWindow::slotContextMenu(QPoint pos)
@@ -504,46 +541,100 @@ void MainWindow::on_action_show_task_triggered()
 
 void MainWindow::on_action_quit_triggered()
 {
+
     this->close();
 }
 
 void MainWindow::on_action_stop_triggered()
 {
-
+    int currentRow = ui->tableWidget_download_file->currentRow();
+    if (currentRow == -1) return;
+    QTableWidgetItem* pItem = ui->tableWidget_download_file->item(currentRow, 0);
+    if (pItem == nullptr) return;
+    int fileId = pItem->data(Qt::UserRole).toInt();
+    MultithreadDownloader* pDownloader = mMapDownloader.find(fileId).value();
+    if (pDownloader == nullptr) return;
+    pDownloader->stop();
 }
 
 void MainWindow::on_action_restart_triggered()
 {
-    QList<QTableWidgetItem*> pSelectedItems = ui->tableWidget_download_file->selectedItems();
-    foreach(auto item, pSelectedItems) {
-        if (item->column() == ETIT_FILENAME) {
-            int fileId = item->data(Qt::UserRole).toInt();
-            MultithreadDownloader* pDownloader = mMapDownloader.find(fileId).value();
-            if (pDownloader == nullptr) return;
+    int currentRow = ui->tableWidget_download_file->currentRow();
+    if (currentRow == -1) return;
+    QTableWidgetItem* pItem = ui->tableWidget_download_file->item(currentRow, 0);
+    if (pItem == nullptr) return;
+    int fileId = pItem->data(Qt::UserRole).toInt();
+    MultithreadDownloader* pDownloader = mMapDownloader.find(fileId).value();
+    if (pDownloader == nullptr) return;
+    pDownloader->restart();
+}
 
-
+void MainWindow::onRemoveTasks(bool bDelete)
+{
+    QModelIndexList list = ui->tableWidget_download_file->selectionModel()->selectedRows();
+    QList<int> listId;
+    foreach(auto item, list) {
+        QTableWidgetItem* pItem = ui->tableWidget_download_file->item(item.row(), 0);
+        if (pItem == nullptr) return;
+        int fileId = pItem->data(Qt::UserRole).toInt();
+        FileModel* pFileModel = dynamic_cast<FileModel*>(mDataHandle->sqlAdapter(EAT_FILE)->findDataModel(fileId));
+        if (pFileModel == nullptr) return;
+        MultithreadDownloader* pDownloader = mMapDownloader.find(fileId).value();
+        if (pDownloader != nullptr) { // 结束下载并删除下载任务
+            pDownloader->stop();
+            pDownloader->deleteLater();
+            mMapDownloader.remove(fileId);
         }
+        if (bDelete) { // 删除物理文件
+            ClassifyModel* pClassifyModel = dynamic_cast<ClassifyModel*>(mDataHandle->sqlAdapter(EAT_CLASSIFY)->findDataModel(pFileModel->classifyID()));
+            if (pClassifyModel == nullptr) return;
+            QString strFilePath = pClassifyModel->savePath()+"/"+pFileModel->name();
+            QFile::remove(strFilePath);
+        }
+         // 从列表中移除
+         ui->tableWidget_download_file->removeRow(item.row());
+        // 删除文件内存与数据库信息
+         mDataHandle->sqlAdapter(EAT_FILE)->deleteDataModel(fileId);
+         mDataHandle->sqlAdapter(EAT_FILE)->deleteRecord(QList<int>{fileId});
     }
+
 }
 
 void MainWindow::on_action_delete_triggered()
 {
-
+    if (ui->tableWidget_download_file->selectedItems().isEmpty()) {
+        return;
+    }
+    RemoveTask* pRemoveTask = new RemoveTask(this);
+    connect(pRemoveTask, &RemoveTask::removeTasks, this, &MainWindow::onRemoveTasks);
+    pRemoveTask->show();
 }
 
 void MainWindow::on_action_pause_all_triggered()
 {
-
-}
-
-void MainWindow::on_action_stop_all_triggered()
-{
-
+    foreach(auto downloader, mMapDownloader) {
+        downloader->pause();
+    }
 }
 
 void MainWindow::on_action_del_all_complete_triggered()
 {
-
+    QMessageBox::StandardButton ret = QMessageBox::information(this, "下载任务移除确认", "您确定要从下载列表中移除全部已完成任务吗?");
+    if (ret == QMessageBox::Ok) {
+        for (int i = 0; i < ui->tableWidget_download_file->rowCount(); i++) {
+            QTableWidgetItem* pItem = ui->tableWidget_download_file->item(i, 0);
+            if (pItem == nullptr) return;
+            int fileId = pItem->data(Qt::UserRole).toInt();
+            FileModel* pFileModel = dynamic_cast<FileModel*>(mDataHandle->sqlAdapter(EAT_FILE)->findDataModel(fileId));
+            if (pFileModel == nullptr) return;
+            if (pFileModel->status() == true) {
+                mMapDownloader.remove(fileId);
+                ui->tableWidget_download_file->removeRow(i);
+                mDataHandle->sqlAdapter(EAT_FILE)->deleteDataModel(fileId);
+                mDataHandle->sqlAdapter(EAT_FILE)->deleteRecord(QList<int>{fileId});
+            }
+        }
+    }
 }
 
 void MainWindow::on_action_find_triggered()
@@ -551,3 +642,8 @@ void MainWindow::on_action_find_triggered()
 
 }
 
+
+void MainWindow::on_action_stop_all_triggered()
+{
+
+}

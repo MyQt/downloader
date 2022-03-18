@@ -28,6 +28,7 @@ public:
     virtual void start() = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
+    virtual void restart() = 0;
     State state() const { return mState; }
 protected:
     explicit AbstractMission(QObject* parent = nullptr) : QObject(parent) {}

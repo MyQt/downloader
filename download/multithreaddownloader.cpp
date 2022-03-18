@@ -217,6 +217,21 @@ void MultithreadDownloader::stop()
     }
 }
 
+void MultithreadDownloader::restart()
+{
+    // 销毁任务
+    destroyMissions();
+    // 删除临时文件,终止写入任务
+    mWriter->terminate();
+    mWriter->deleteFile();
+    mWriter->close();
+    // 清除文件下载临时记录
+    mFileModel->downloadList().clear();
+    mThreadCount = QThread::idealThreadCount();
+    updateState(Stopped);
+    start();
+}
+
 void MultithreadDownloader::errorHanding(QNetworkReply::NetworkError err)
 {
     mNetworkError = err;

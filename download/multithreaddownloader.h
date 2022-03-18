@@ -41,7 +41,9 @@ public:
     void start() Q_DECL_OVERRIDE;
     void pause() Q_DECL_OVERRIDE;
     void stop() Q_DECL_OVERRIDE;
+    void restart() Q_DECL_OVERRIDE;
     FileModel* fileModel() const { return mFileModel; }
+    MultithreadedDownloaderWriter* writer() const { return mWriter;}
 signals:
     void error(int id, const MultithreadDownloader::Error err);
     void downloadProgress(int id, qint64 bytesReceived, qint64 bytesTotal);

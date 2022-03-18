@@ -23,6 +23,7 @@ public:
     void close() {
         m_downloadFile.close();
     }
+    void deleteFile() { m_downloadFile.remove(); }
     void setFileName(const QString& name) {
         mFileName = name;
     }

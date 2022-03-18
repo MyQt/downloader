@@ -37,6 +37,7 @@ public:
     void start() Q_DECL_OVERRIDE;
     void pause() Q_DECL_OVERRIDE;
     void stop() Q_DECL_OVERRIDE;
+    void restart() override;
 signals:
     void replyError(QNetworkReply::NetworkError err);
     void updateMission(qint64 newStart, qint64 end);

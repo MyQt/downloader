@@ -33,7 +33,8 @@ FORMS += \
     downloadinfo.ui \
     mainwindow.ui \
     newtask.ui \
-    formclassify.ui
+    formclassify.ui \
+    removetask.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -62,7 +63,8 @@ HEADERS += \
     ui/downloadinfo.h \
     ui/formclassify.h \
     ui/mainwindow.h \
-    ui/newtask.h
+    ui/newtask.h \
+    ui/removetask.h
 
 SOURCES += \
     download/downloadmission.cpp \
@@ -80,4 +82,5 @@ SOURCES += \
     ui/downloadinfo.cpp \
     ui/formclassify.cpp \
     ui/mainwindow.cpp \
-    ui/newtask.cpp
+    ui/newtask.cpp \
+    ui/removetask.cpp

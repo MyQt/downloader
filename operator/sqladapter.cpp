@@ -21,6 +21,7 @@ void SQLAdapter::deleteDataModel(int key)
     auto iter = mMapDataModel.find(key);
     if (iter != mMapDataModel.end()) {
         delete iter.value();
+        mMapDataModel.erase(iter);
     }
 }
 

@@ -59,6 +59,12 @@ void DownloadMission::stop()
     }
 }
 
+void DownloadMission::restart()
+{
+    stop();
+    start();
+}
+
 void DownloadMission::onFinished()
 {
     if (mState == Running) {
